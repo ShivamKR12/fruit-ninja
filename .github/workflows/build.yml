@@ -28,11 +28,11 @@ jobs:
 
       - name: Zip executable
         run: |
-          Compress-Archive -Path dist\fruit-ninja.exe -DestinationPath dist\Fruit-Ninja.zip -Force
+          Compress-Archive -Path dist\fruit-ninja.exe -DestinationPath dist\fruit-ninja.zip -Force
 
       - name: Create Release
         uses: softprops/action-gh-release@v2
         with:
-          tag_name: V 1.0.${{ github.run_number }}
-          name: Fruit-Ninja V 1.0.${{ github.run_number }}
-          files: dist\Fruit-Ninja.zip
+          tag_name: v1.0.${{ github.run_number }}
+          name: Fruit-Ninja v1.0.${{ github.run_number }}
+          files: dist/fruit-ninja.zip
