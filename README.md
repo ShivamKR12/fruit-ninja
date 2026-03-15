@@ -1,3 +1,6 @@
+[![Build](https://github.com/ShivamKR12/fruit-ninja/actions/workflows/build.yml/badge.svg)](https://github.com/ShivamKR12/fruit-ninja/actions/workflows/build.yml)
+[![Release](https://img.shields.io/github/v/release/ShivamKR12/fruit-ninja?cacheSeconds=60)](https://github.com/ShivamKR12/fruit-ninja/releases)
+
 # Fruit Ninja
 
 A simple Fruit Ninja–style game built with Pygame.
