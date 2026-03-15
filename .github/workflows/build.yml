@@ -24,15 +24,15 @@ jobs:
 
       - name: Build executable with PyInstaller
         run: |
-          pyinstaller flippy.spec
+          pyinstaller main.spec
 
       - name: Zip executable
         run: |
-          Compress-Archive -Path dist\flippy.exe -DestinationPath dist\flippy.zip -Force
+          Compress-Archive -Path dist\fruit-ninja.exe -DestinationPath dist\Fruit-Ninja.zip -Force
 
       - name: Create Release
         uses: softprops/action-gh-release@v2
         with:
           tag_name: V 1.0.${{ github.run_number }}
-          name: Flippy V 1.0.${{ github.run_number }}
-          files: dist/flippy.zip
+          name: Fruit-Ninja V 1.0.${{ github.run_number }}
+          files: dist\Fruit-Ninja.zip
