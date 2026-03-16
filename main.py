@@ -29,12 +29,15 @@ def resource_path(relative_path):
     Returns:
     str: The absolute path to the resource file.
     """
+    
     # Try to get the path from PyInstaller's temporary directory.
     try:
         base_path = sys._MEIPASS  # This variable is set by PyInstaller when running from an executable.
+    
     # If not packaged (running as a regular Python script), use the current working directory.
     except Exception:
         base_path = os.path.abspath(".")  # Get the absolute path of the current directory.
+    
     # Join the base path with the relative path to get the full path.
     return os.path.join(base_path, relative_path)  # Combine paths safely, handling different operating systems.
 
@@ -102,6 +105,7 @@ def generate_random_fruits(fruit):
 
     No return value. Modifies the global 'data' dictionary.
     """
+    
     # Create the file path for the fruit's image.
     fruit_path = resource_path("images/" + fruit + ".png")  # Combine path to get 'images/melon.png', etc.
 
@@ -120,6 +124,7 @@ def generate_random_fruits(fruit):
     # Randomly decide if this fruit should be thrown (75% chance to throw, 25% to not).
     if random.random() >= 0.75:  # random.random() returns a float between 0.0 and 1.0.
         data[fruit]['throw'] = True  # Throw this fruit.
+    
     else:
         data[fruit]['throw'] = False  # Don't throw this fruit.
 
@@ -143,6 +148,7 @@ def hide_cross_lives(x, y):
 
     No return value. Draws directly to the screen.
     """
+    
     # Load and draw the red cross image over the life icon.
     gameDisplay.blit(pygame.image.load(resource_path("images/red_lives.png")), (x, y))
     # blit() draws one surface onto another. Here, it draws the red cross at position (x, y).
@@ -166,6 +172,7 @@ def draw_text(display, text, size, x, y):
 
     No return value. Draws directly to the screen.
     """
+    
     # Create a font object with the specified size.
     font = pygame.font.Font(font_name, size)
     # Render the text into a surface (image).
@@ -193,8 +200,10 @@ def draw_lives(display, x, y, lives, image):
 
     No return value. Draws directly to the screen.
     """
+    
     # Loop for each life the player has.
     for i in range(lives):  # range(lives) gives 0, 1, 2 for lives=3.
+        
         # Load the life icon image.
         img = pygame.image.load(resource_path(image))
         # Get the rectangle for positioning.
@@ -215,30 +224,38 @@ def show_gameover_screen():
 
     No return value. Handles the game over state.
     """
+    
     # Draw the background image.
     gameDisplay.blit(background, (0, 0))
     # Draw the title text.
     draw_text(gameDisplay, "FRUIT NINJA!", 90, WIDTH / 2, HEIGHT / 4)
+    
     # If the game is not over (first time showing), display the score.
     if not game_over:
         draw_text(gameDisplay, "Score : " + str(score), 50, WIDTH / 2, HEIGHT / 2)
+    
     # Draw the instruction text.
     draw_text(gameDisplay, "Press a key to begin!", 64, WIDTH / 2, HEIGHT * 3 / 4)
     # Update the display to show the changes.
     pygame.display.flip()
     # Set waiting to True to enter the loop.
     waiting = True
+    
     # Loop until a key is pressed.
     while waiting:
+        
         # Limit the loop to FPS to avoid using too much CPU.
         clock.tick(FPS)
+        
         # Check for events.
         for event in pygame.event.get():
+            
             # If the window close button is clicked.
             if event.type == pygame.QUIT:
                 # User closed the window during game over screen.
                 pygame.quit()  # Shut down Pygame.
                 sys.exit()  # Exit the program.
+            
             # If a key is released.
             if event.type == pygame.KEYUP:
                 waiting = False  # Exit the waiting loop.
@@ -248,13 +265,17 @@ def show_gameover_screen():
 first_round = True  # Boolean: True for the first game start, to show the initial screen.
 game_over = True  # Boolean: True when the game is over, False during gameplay.
 game_running = True  # Boolean: True while the game is running, False to exit.
+
 while game_running:  # Main game loop.
+    
     # If the game is over, reset and start a new round.
     if game_over:
+        
         # If it's the first round, show the game over screen (which acts as start screen).
         if first_round:
             show_gameover_screen()  # Display the start screen.
             first_round = False  # Set to False so it doesn't show again.
+        
         # Reset game_over to False to start playing.
         game_over = False
         # Reset player lives to 3.
@@ -267,11 +288,13 @@ while game_running:  # Main game loop.
         score_text = font.render('Score : ' + str(score), True, (255, 255, 255))
         # Regenerate fruits for a fresh round.
         data = {}  # Clear the data dictionary.
+        
         for fruit in fruits:  # Loop through fruits again.
             generate_random_fruits(fruit)  # Generate new random properties.
 
     # Handle events: user input like mouse clicks or closing window.
     for event in pygame.event.get():  # Get all pending events.
+        
         # If the window close button is clicked.
         if event.type == pygame.QUIT:
             game_running = False  # Exit the main loop.
@@ -285,8 +308,10 @@ while game_running:  # Main game loop.
 
     # Loop through each fruit in the data dictionary.
     for key, value in data.items():  # key is 'melon', etc.; value is the dict of properties.
+        
         # If this fruit is thrown (visible).
         if value['throw']:
+            
             # Update the x-position based on speed_x.
             value['x'] += value['speed_x']  # Move left or right.
             # Update the y-position based on speed_y.
@@ -300,6 +325,7 @@ while game_running:  # Main game loop.
             if value['y'] <= 800:
                 # Draw the fruit image at its current position.
                 gameDisplay.blit(value['img'], (value['x'], value['y']))
+            
             else:
                 # If off screen, generate a new random fruit.
                 generate_random_fruits(key)
@@ -310,35 +336,46 @@ while game_running:  # Main game loop.
             # Check if the mouse is over the fruit and it hasn't been hit yet.
             if not value['hit'] and current_position[0] > value['x'] and current_position[0] < value['x'] + 60 \
                     and current_position[1] > value['y'] and current_position[1] < value['y'] + 60:
+                
                 # The fruit is 60x60 pixels, so check if mouse is within that rectangle.
                 if key == 'bomb':  # If it's a bomb.
                     player_lives -= 1  # Decrease lives by 1.
+                    
                     if player_lives == 0:  # If no lives left.
                         hide_cross_lives(690, 15)  # Hide the first life.
+                    
                     elif player_lives == 1:  # If 1 life left.
                         hide_cross_lives(725, 15)  # Hide the second life.
+                    
                     elif player_lives == 2:  # If 2 lives left.
                         hide_cross_lives(760, 15)  # Hide the third life.
+                    
                     # If lives go below 0 (shouldn't happen, but safety).
                     if player_lives < 0:
                         show_gameover_screen()  # Show game over.
                         game_over = True  # End the game.
+                    
                     # Set the image to explosion.
                     half_fruit_path = "images/explosion.png"
+                
                 else:  # If it's a fruit.
                     # Set the image to the half fruit.
                     half_fruit_path = "images/" + "half_" + key + ".png"
+                
                 # Load the new image (half fruit or explosion).
                 value['img'] = pygame.image.load(resource_path(half_fruit_path))
                 # Increase the horizontal speed for effect.
                 value['speed_x'] += 10
+                
                 # If not a bomb, increase score.
                 if key != 'bomb':
                     score += 1  # Add 1 point.
+                
                 # Update the score text.
                 score_text = font.render('Score : ' + str(score), True, (255, 255, 255))
                 # Mark the fruit as hit.
                 value['hit'] = True
+        
         else:  # If not thrown.
             generate_random_fruits(key)  # Regenerate it.
 
@@ -346,6 +383,7 @@ while game_running:  # Main game loop.
     pygame.display.update()
     # Limit the game to run at FPS frames per second.
     clock.tick(FPS)
+
 
 # After the loop, quit Pygame and exit.
 pygame.quit()
