@@ -2,7 +2,7 @@
 
 
 a = Analysis(
-    ['main.py'],
+    ['fruit-ninja.py'],
     pathex=[],
     binaries=[],
     datas=[('images', 'images'), ('back.jpg', '.'), ('comic.ttf', '.'), ('fruit-ninja.png', '.')],
