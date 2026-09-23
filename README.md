@@ -31,11 +31,9 @@ A thrilling and addictive Fruit Ninja-style game developed in Python using the P
 
 - **Python**: Version 3.10 or higher (tested with 3.13).
 - **Pygame**: The game engine library. Install via `pip install pygame-ce`.
-- **Assets**: Ensure the following files are present in the project directory:
-  - `back.jpg` (background image)
-  - `comic.ttf` (font file)
-  - `fruit-ninja.png` (icon or additional asset)
-  - `images/` folder (containing fruit and bomb images)
+- **Assets**: Ensure the following folders and files are present in the project directory:
+  - `images/` folder (containing background image, icon, fruit and bomb images)
+  - `font/` folder (containing font file)
 
 ## Installation
 
@@ -50,7 +48,7 @@ A thrilling and addictive Fruit Ninja-style game developed in Python using the P
    pip install pygame-ce
    ```
 
-3. **Verify Assets**: Ensure all required assets (`back.jpg`, `comic.ttf`, `fruit-ninja.png`, and `images/` folder) are in the same directory as `main.py`.
+3. **Verify Assets**: Ensure all required assets (`images/` and `font/` folders) are in the same directory as `main.py`.
 
 ## How to Play
 
@@ -83,17 +81,14 @@ To create a standalone executable for distribution (e.g., for Windows):
 
 2. Build the Executable:
    ```bash
-   pyinstaller main.spec
+   pyinstaller fruit-ninja.spec
    ```
 
 3. The executable will be generated in the `dist/` folder, including the `fruit-ninja.ico` icon and all necessary resources. Share the `dist/main/` directory or the executable file as needed.
 
 ## Screenshots
 
-*(Add screenshots here once available)*
-
-- Gameplay in action
-- Game over screen
+![0](screenshots/)
 
 ## Contributing
 
