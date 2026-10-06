@@ -49,7 +49,9 @@ FPS = 12  # Frames Per Second: How many times the game updates and redraws the s
 # A lower value like 12 means the game runs slower, which is fine for this type of game.
 
 # Initialize all Pygame modules. This must be called before using any Pygame functions.
-pygame.init()
+pygame.mixer.pre_init(44100, -16, 2, 1024)
+    pygame.init()
+    pygame.mixer.set_num_channels(64)
 
 # Set the title of the game window.
 pygame.display.set_caption('Fruit-Ninja')
@@ -245,7 +247,7 @@ def show_gameover_screen():
     while waiting:
         
         # Limit the loop to FPS to avoid using too much CPU.
-        clock.tick(FPS)
+        clock.tick()
         
         # Check for events.
         for event in pygame.event.get():
@@ -382,7 +384,7 @@ while game_running:  # Main game loop.
     # Update the display with all the drawings.
     pygame.display.update()
     # Limit the game to run at FPS frames per second.
-    clock.tick(FPS)
+    clock.tick()
 
 
 # After the loop, quit Pygame and exit.

@@ -37,7 +37,9 @@ async def main():
     __EMSCRIPTEN__ = hasattr(sys, "_emscripten_info")
 
     # Initialize all Pygame modules. This must be called before using any Pygame functions.
+    pygame.mixer.pre_init(44100, -16, 2, 1024)
     pygame.init()
+    pygame.mixer.set_num_channels(64)
 
     # Set the title of the game window.
     pygame.display.set_caption('Fruit-Ninja')
@@ -240,7 +242,7 @@ async def main():
         while waiting:
             
             # Limit the loop to FPS to avoid using too much CPU.
-            clock.tick(FPS)
+            clock.tick()
             
             # Check for events.
             pygame.event.pump()
@@ -393,7 +395,7 @@ async def main():
         # Update the display with all the drawings.
         pygame.display.update()
         # Limit the game to run at FPS frames per second.
-        clock.tick(FPS)
+        clock.tick()
 
         await asyncio.sleep(0)  # Yield control to allow other tasks to run (if needed).
 
